@@ -5,10 +5,8 @@ file.close()
 import random 
 index=random.randint(0,len(words)-1)
 word=words[index]
-
-
     
-
+    
 guesses=[]
 correctguesses=set()
 incorrectguesses=[]
@@ -16,8 +14,11 @@ maxguesses=len(word)+3
 print ("".join("_" if char != " " else " " for char in word))   
 while len(incorrectguesses) < maxguesses:
     guess = ""
-    while len(guess) != 1 or guess<'a' or guess>'z':
-        guess=input("What letter would you like to guess? ") 
+    while len(guess) != 1:
+        guess=input("What letter would you like to guess? ").lower()    
+    if not guess.isalpha():
+        print("Invalid guess, no numbers accepted, try again")
+        continue
     if guess in incorrectguesses:
         print(f"You have already guessed {guess} try again")
         continue
