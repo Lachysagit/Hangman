@@ -7,11 +7,16 @@ index=random.randint(0,len(words)-1)
 word=words[index]
     
     
+
+
 guesses=[]
 correctguesses=set()
 incorrectguesses=[]
 maxguesses=len(word)+3
-print ("".join("_" if char != " " else " " for char in word))   
+print(word)
+display = ("".join("_" if char != " " else " " for char in word)) 
+print(display)
+
 while len(incorrectguesses) < maxguesses:
     guess = ""
     while len(guess) != 1:
@@ -25,6 +30,9 @@ while len(incorrectguesses) < maxguesses:
     if guess in correctguesses:
         print(f"You have already guessed {guess} try again")
         continue
+    if  "_" not in display:
+        print("done")
+    
     
     guesses.append(guess)
     
