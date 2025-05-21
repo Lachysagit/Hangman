@@ -4,26 +4,20 @@ words=file.read().splitlines()
 file.close()
 
 import random 
-index=random.randint(0,len(words)-1)
+index=random.randint(0,len(words)-1) # Picks a random index from the range of valid indices in the 'words' list
 word=words[index]
     
-    
-
-
-
-correctguesses=set()
+correctguesses=[]
 incorrectguesses=[]
 maxguesses=len(word)+3
 
-display = ("".join("_" if char != " " else " " for char in word)) 
-print(display)
-
-
 #Makes sure your allowed to guess again and checks if guess is valid
+
 while len(incorrectguesses) < maxguesses:
+    hangman=['\n', ' ___\n', '|   \n|   \n|   \n|   \n|   \n|\n|___', ' ___\n|   \n|   \n|   \n|   \n|\n|___\n', ' ___\n|  |\n|   \n|   \n|   \n|\n|___\n', ' ___\n|  |\n|  O\n|   \n|   \n|\n|___\n', ' ___\n|  |\n|  O\n|  |\n|   \n|\n|___\n', ' ___\n|  |\n|  O\n|  |\n|  A\n|\n|___\n', ' ___\n|  |\n|  o\n|  +\n|  A\n|\n|___\n']     
     guess = ""
     while len(guess) != 1:
-        guess = input("What letter would you like to guess? ").lower()    
+        guess = input("What letter would you like to guess? ").lower()     
     
     if not guess.isalpha():
         print("Invalid guess, no numbers accepted, try again")
@@ -36,21 +30,31 @@ while len(incorrectguesses) < maxguesses:
 
     #Checks if guess is in word
     if guess in word:
-        correctguesses.add(guess)
+        correctguesses.append(guess)
     else:
         incorrectguesses.append(guess)
 
-    #Display hangman progress
-    current_display = "".join(letter if letter == " " or letter in correctguesses else "_" for letter in word) 
-    #replaces unguessed characters with underscores
-    print("Incorrect guesses:", incorrectguesses)
-    print("Correct guesses:", correctguesses)
-    print(current_display)
+    
+    #Replaces unguessed letters with underscores
+    current_display = "".join(letter if letter in correctguesses or letter == " " else "_" for letter in word)
+
+    # Display updated game state
+    print("\nIncorrect guesses:", incorrectguesses)
+    print("Correct guesses:",(correctguesses))
+    print(f"\nThe word is: {current_display}")
+    print(hangman[len(incorrectguesses)])
+    #Losing message and shows the Answer
+    if len(incorrectguesses) == len(hangman) - 1:
+        print(F"You have run out of guesses. HANGMAN! The word was: {word}")
+        break
+
+    
+
 
     #Win condition
     if "_" not in current_display:
         print("Congratulations! You've guessed the word correctly!")
+        break
         
         
-#Losing message and shows the Answer
-print(F"You have run out of guesses. HANGMAN! The word was: {word}")
+
