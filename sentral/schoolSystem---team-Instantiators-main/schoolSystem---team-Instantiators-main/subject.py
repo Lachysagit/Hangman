@@ -15,3 +15,4 @@ class Student(Person):
     def nextSchoolYear(self):
         self.schoolYear = self.schoolYear+1
         
+        
